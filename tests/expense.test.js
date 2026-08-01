@@ -100,7 +100,7 @@ describe('Get All Expenses',()=>{
         expect(Array.isArray(res.body.data)).toBe(true);
     })
 }); 
-describe('Get All Expenses',()=>{
+describe('Get All Expenses based on category',()=>{
     test('GET /api/expense?category=fashion should return 200', async()=>{
         const res = await request(app)
             .get("/api/expenses?category=fashion");
@@ -109,4 +109,23 @@ describe('Get All Expenses',()=>{
         expect(Array.isArray(res.body.data)).toBe(true);
     })
 }); 
+describe('Get Total Expenses',()=>{
+    test('GET /api/expenses/total should return 200 and Sum of All Expenses', async()=>{
+        const res = await request(app)
+            .get("/api/expenses/total");
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+    })
+}); 
+
+describe('Get Total Expenses based on category',()=>{
+    test('GET /api/expenses/total?category=fashion should return 200', async()=>{
+        const res = await request(app)
+            .get("/api/expenses/total?category=fashion");
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+    })
+}); 
+
+
 

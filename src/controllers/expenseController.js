@@ -76,7 +76,31 @@ const getExpenses = asyncHandler(async (req,res)=>{
 
 
 const getTotalExpenses = asyncHandler(async (req,res)=>{
-    res.sendStatus('501');
+  const {category} = req.query;
+  const data = await readExpenses() || [];
+  if(category){
+    const filteredData = data.filter((item) => item.category.toLowerCase() === category.toLowerCase());
+    var total = 0;
+    for(var expense of filteredData){
+      total += expense.amount;
+    }
+    total = Number(total.toFixed(2));
+    return res.status(200).json({
+    success: true,
+    message: `Total for category '${category}'`,
+    total: total
+  })
+  }
+  var total = 0;
+  for(var expense of data){
+    total += expense.amount;
+  }
+  total = Number(total.toFixed(2));
+  return res.status(200).json({
+    success: true,
+    message: "Total Expenses",
+    total: total
+  })
 });
 
 const deleteExpense = asyncHandler(async (req,res)=>{

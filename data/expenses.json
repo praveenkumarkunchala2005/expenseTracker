@@ -61,5 +61,12 @@
     "amount": 1000,
     "category": "Fashion",
     "date": "2026-01-01"
+  },
+  {
+    "id": "50faa7dc-6a0e-4e94-a9ba-7e3143fc412d",
+    "title": "Cloths",
+    "amount": 1000,
+    "category": "Fashion",
+    "date": "2026-01-01"
   }
 ]
