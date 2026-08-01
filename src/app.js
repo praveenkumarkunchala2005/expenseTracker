@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // health route for api to check if it is running safely or not.
 app.get('/api/health',(req, res) => {
-  res.status(200).json({ succes: true, status: 'OK' });
+  res.status(200).json({ success: true, status: 'OK' });
 });
 
 app.use('/api/expenses',expenseRoutes);
