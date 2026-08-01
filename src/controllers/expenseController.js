@@ -2,11 +2,13 @@ const asyncHandler = require('../middlewares/asyncHandler');
 const { readExpenses, writeExpenses } = require('../utils/fileStorage');
 const crypto = require("crypto");
 
+
+// addExpense Function: Add an expense (id,title,amount,category,date)
 const addExpense = asyncHandler(async (req,res)=>{
   const {title,amount,category,date} = req.body;
   const id = crypto.randomUUID();
 
-  if(!id || !title || !amount || !category || !date){
+  if(!title || !amount || !category || !date){
     const error = new Error("Details Not Sufficent");
     error.statusCode = 400;
     throw error;
@@ -64,6 +66,7 @@ const addExpense = asyncHandler(async (req,res)=>{
   })
 });
 
+// getExpenses Function: Get All Expenses (filter by category)
 const getExpenses = asyncHandler(async (req,res)=>{
   const {category} = req.query;
   const data = await readExpenses() || [];
@@ -84,14 +87,14 @@ const getExpenses = asyncHandler(async (req,res)=>{
   })
 });
 
-
+// getTotalExpenses Function: Get Total Expenses (filter by category)
 const getTotalExpenses = asyncHandler(async (req,res)=>{
   const {category} = req.query;
   const data = await readExpenses() || [];
   if(category){
     const filteredData = data.filter((item) => item.category.toLowerCase() === category.toLowerCase());
-    var total = 0;
-    for(var expense of filteredData){
+    let total = 0;
+    for(let expense of filteredData){
       total += expense.amount;
     }
     total = Number(total.toFixed(2));
@@ -101,8 +104,8 @@ const getTotalExpenses = asyncHandler(async (req,res)=>{
     total: total
   })
   }
-  var total = 0;
-  for(var expense of data){
+  let total = 0;
+  for(let expense of data){
     total += expense.amount;
   }
   total = Number(total.toFixed(2));
@@ -113,9 +116,9 @@ const getTotalExpenses = asyncHandler(async (req,res)=>{
   })
 });
 
+// deleteExpense Function: Delete Expense by ID
 const deleteExpense = asyncHandler(async (req, res) => {
   const { id } = req.params;
-
   const data = (await readExpenses()) || [];
   const filteredData = data.filter((item) => String(item.id) !== String(id));
 

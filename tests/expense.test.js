@@ -149,3 +149,33 @@ describe('Delete Expense',()=>{
     expect(res.body.success).toBe(false);
     })
 });
+
+describe('Delete Expense',()=>{   
+    test('DELETE /api/expenses/:id should return 200', async () => {
+        // add expense to database to get id
+        const addRes = await request(app)
+            .post('/api/expenses')
+            .send({
+                title: 'Meal',
+                amount: 25,
+                category: 'Food',
+                date: '2024-01-01'
+            });
+        const expenseId = addRes.body.expense.id;
+        // delete expense based on id
+        const res = await request(app)
+            .delete(`/api/expenses/${expenseId}`);
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(res.body.message).toBe('Expense deleted successfully');
+    });
+});   
+
+describe('Delete Expense',()=>{   
+    test('DELETE /api/expenses/:id should return 404 if not found', async () => {
+        const res = await request(app)
+            .delete('/api/expenses/1234');
+        expect(res.statusCode).toBe(404);
+        expect(res.body.success).toBe(false);
+    });
+});
