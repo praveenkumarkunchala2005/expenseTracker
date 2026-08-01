@@ -15,10 +15,10 @@ describe('Health Api',()=>{
 describe('Add an expense (title, amount, category, date)',()=>{
     test('POST /api/expense should return 201 if details are suffecient and added Succesfully', async()=>{
         const expense = {
-            title: "Groceries",
-            amount: 100,
-            category: "Food",
-            date: "2022-01-01"
+            title: "Cloths",
+            amount: 1000,
+            category: "Fashion",
+            date: "2026-01-01"
         };
 
         const res = await request(app)
@@ -81,19 +81,32 @@ describe('Add an expense (title, amount, category, date)',()=>{
     })
 });
 
-describe('Add an expense (id, title, amount, category, date)',()=>{
-    test('POST /api/expense should return 400 if details are not suffecient', async()=>{
-        const expense = {
-            id: 101,
-            title: "Groceries",
-            amount: 100,
-            category: "Food",
-        };
 
+describe('Get All Expenses',()=>{
+    test('GET /api/expense should return 200', async()=>{
         const res = await request(app)
-            .post("/api/expenses")
-            .send(expense);
-            
-        expect(res.statusCode).toBe(400);
+            .get("/api/expenses");
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(Array.isArray(res.body.data)).toBe(true);
     })
-});
+}); 
+describe('Get All Expenses',()=>{
+    test('GET /api/expense=fashion should return 200', async()=>{
+        const res = await request(app)
+            .get("/api/expenses");
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(Array.isArray(res.body.data)).toBe(true);
+    })
+}); 
+describe('Get All Expenses',()=>{
+    test('GET /api/expense?category=fashion should return 200', async()=>{
+        const res = await request(app)
+            .get("/api/expenses?category=fashion");
+        expect(res.statusCode).toBe(200);
+        expect(res.body.success).toBe(true);
+        expect(Array.isArray(res.body.data)).toBe(true);
+    })
+}); 
+

@@ -33,5 +33,33 @@
     "amount": 100,
     "category": "Food",
     "date": "2022-01-01"
+  },
+  {
+    "id": "d11d9180-d1c2-4982-ba3c-9667dbe02353",
+    "title": "Groceries",
+    "amount": 100,
+    "category": "Food",
+    "date": "2022-01-01"
+  },
+  {
+    "id": "08eddc5a-4edb-44d1-b527-d66641e2d3ad",
+    "title": "Groceries",
+    "amount": 100,
+    "category": "Food",
+    "date": "2022-01-01"
+  },
+  {
+    "id": "47b14aa1-fb76-47bb-803d-509798bd903f",
+    "title": "Cloths",
+    "amount": 1000,
+    "category": "Fashion",
+    "date": "2026-01-01"
+  },
+  {
+    "id": "2da7f92a-99a2-46fd-a524-7d1c9188056b",
+    "title": "Cloths",
+    "amount": 1000,
+    "category": "Fashion",
+    "date": "2026-01-01"
   }
 ]

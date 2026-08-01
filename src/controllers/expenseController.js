@@ -46,20 +46,34 @@ const addExpense = asyncHandler(async (req,res)=>{
   const data = await readExpenses() || [];
   data.push(expense);
   await writeExpenses(data);
-  res.status(201).json({
+
+  return res.status(201).json({
     success: true,
     message: "Expense added Succesfully",
     expense: expense
   })
 });
 
-const getAllExpenses = asyncHandler(async (req,res)=>{
-  res.sendStatus('200');
+const getExpenses = asyncHandler(async (req,res)=>{
+  const {category} = req.query;
+  const data = await readExpenses() || [];
+  if(category){
+    const filteredData = data.filter((item) => item.category.toLowerCase() === category.toLowerCase());
+    return res.status(200).json({
+    success: true,
+    count: filteredData.length,
+    message: "Expenses",
+    data: filteredData
+  })
+  }
+  return res.status(200).json({
+    success: true,
+    count: data.length,
+    message: "Expenses",
+    data: data
+  })
 });
 
-const getExpensesBasedOnCategory = asyncHandler(async (req,res)=>{
-  res.sendStatus('501');
-});
 
 const getTotalExpenses = asyncHandler(async (req,res)=>{
     res.sendStatus('501');
@@ -70,4 +84,4 @@ const deleteExpense = asyncHandler(async (req,res)=>{
 });
 
 
-module.exports = {addExpense, getAllExpenses,getExpensesBasedOnCategory, getTotalExpenses, deleteExpense};
+module.exports = {addExpense, getExpenses, getTotalExpenses, deleteExpense};
