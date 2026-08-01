@@ -6,6 +6,8 @@ const morgan = require('morgan');
 const notFound = require('./middlewares/notFound');
 const errorHandler = require('./middlewares/errorHandler');
 
+const expenseRoutes = require('./routes/expenseRoutes');
+
 const app = express();
 
 app.use(cors());
@@ -18,6 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.get('/api/health',(req, res) => {
   res.status(200).json({ succes: true, status: 'OK' });
 });
+
+app.use('/api/expenses',expenseRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

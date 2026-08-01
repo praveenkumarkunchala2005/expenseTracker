@@ -1,22 +1,14 @@
 const express = require('express');
+const asyncHandler = require('../middlewares/asyncHandler');
 const router = express.Router();
-const {
-  getExpenses,
-  getExpenseById,
-  createExpense,
-  updateExpense,
-  deleteExpense
-} = require('../controllers/expenseController');
 
-router
-  .route('/')
-  .get(getExpenses)
-  .post(createExpense);
+const expenseController = require('../controllers/expenseController');
 
-router
-  .route('/:id')
-  .get(getExpenseById)
-  .put(updateExpense)
-  .delete(deleteExpense);
+router.post('/',expenseController.addExpense);
+router.get('/',expenseController.getAllExpenses);
+router.get('/category',expenseController.getExpensesBasedOnCategory);
+router.get('/total',expenseController.getTotalExpenses);
+router.delete('/:id',expenseController.deleteExpense);
 
 module.exports = router;
+
