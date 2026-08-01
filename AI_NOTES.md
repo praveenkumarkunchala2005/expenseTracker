@@ -9,6 +9,7 @@
    - Used AI To Find Edges Cases missed in `addExpense()` function and helped me to fix them (date validation, white space only strings, amount is 0).
    - Used AI Suggestion to integrate category filtering in `getAllExpenses()` instead of seperate route.
    - AI helped identify an issue where data from previous test executions persisted in the JSON file, causing subsequent tests to fail. (fix: clearing the test data file before each test using `beforeEach()`).
+   - Used AI Support and Suggestion for `README.md`.
    
 
 ## 2. Code Written By Me:
