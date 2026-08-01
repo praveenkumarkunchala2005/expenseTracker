@@ -1,11 +1,12 @@
-const { randomUUID } = require('crypto');
 const asyncHandler = require('../middlewares/asyncHandler');
 const { readExpenses, writeExpenses } = require('../utils/fileStorage');
+const crypto = require("crypto");
 
 const addExpense = asyncHandler(async (req,res)=>{
   const {title,amount,category,date} = req.body;
+  const id = crypto.randomUUID();
 
-  if(!title || !amount || !category || !date){
+  if(!id || !title || !amount || !category || !date){
     const error = new Error("Details Not Sufficent");
     error.statusCode = 400;
     throw error;
@@ -36,7 +37,7 @@ const addExpense = asyncHandler(async (req,res)=>{
   }
 
   const expense = {
-    id: randomUUID(),
+    id: id,
     title,
     amount,
     category,
@@ -44,6 +45,15 @@ const addExpense = asyncHandler(async (req,res)=>{
   };
 
   const data = await readExpenses() || [];
+  
+  let isDuplicate = data.some((item) => item.id === id);
+
+  if(isDuplicate){
+    const error = new Error(`Expense with ID ${id} already exists`);
+    error.statusCode = 409;
+    throw error;
+  }
+
   data.push(expense);
   await writeExpenses(data);
 
@@ -103,8 +113,22 @@ const getTotalExpenses = asyncHandler(async (req,res)=>{
   })
 });
 
-const deleteExpense = asyncHandler(async (req,res)=>{
-  res.sendStatus('501');
+const deleteExpense = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  const data = (await readExpenses()) || [];
+  const filteredData = data.filter((item) => String(item.id) !== String(id));
+
+  if (data.length === filteredData.length) {
+    const error = new Error(`Expense with ID ${id} not found`);
+    error.statusCode = 404;
+    throw error;
+  }
+  await writeExpenses(filteredData);
+  return res.status(200).json({
+    success: true,
+    message: "Expense deleted successfully"
+  });
 });
 
 
